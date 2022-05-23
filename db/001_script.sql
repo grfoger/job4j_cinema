@@ -19,4 +19,6 @@ CREATE TABLE ticket (
                         user_id INT NOT NULL REFERENCES users(id)
 );
 
-ALTER TABLE users ADD CONSTRAINT email_unique UNIQUE (email);
+INSERT INTO sessions(name, time) VALUES ('Как я отколошматил лося одной левой', '10:00');
+INSERT INTO sessions(name, time) VALUES ('Мячом по кумполу', '12:00');
+INSERT INTO sessions(name, time) VALUES ('Механический Дед Мороз м/ф', '14:00');
