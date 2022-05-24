@@ -11,6 +11,11 @@ public class Session {
     public Session() {
     }
 
+    public Session(String name, LocalTime time) {
+        this.name = name;
+        this.time = time;
+    }
+
     public Session(int id, String name, LocalTime time) {
         this.id = id;
         this.name = name;
