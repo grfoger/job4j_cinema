@@ -1,5 +1,4 @@
 
-
 CREATE TABLE users (
                        id SERIAL PRIMARY KEY,
                        username VARCHAR NOT NULL,
@@ -21,6 +20,6 @@ CREATE TABLE ticket (
                         user_id INT NOT NULL REFERENCES users(id)
 );
 
-INSERT INTO films(name, time) VALUES ('Как я отколошматил лося одной левой', '10:00');
-INSERT INTO films(name, time) VALUES ('Мячом по кумполу', '12:00');
-INSERT INTO films(name, time) VALUES ('Механический Дед Мороз м/ф', '14:00');
+INSERT INTO films(name, time) VALUES ('Как я отколошматил лося одной левой', '12:00');
+INSERT INTO films(name, time) VALUES ('Мячом по кумполу', '19:00');
+INSERT INTO films(name, time) VALUES ('Механический Дед Мороз м/ф', '20:00');
