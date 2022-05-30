@@ -28,7 +28,7 @@ public class SessionController {
     @GetMapping("/index")
     public String index(Model model) {
         model.addAttribute("films", sessionService.getAll());
-        model.addAttribute("ticket", new Ticket(0, -1, -1, -1, -1));
+        model.addAttribute("ticket", new Ticket(-1, -1, -1, -1, -1));
         return "index";
     }
 

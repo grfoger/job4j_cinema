@@ -37,11 +37,25 @@ public class SessionService {
         return ticketStore.add(ticket);
     }
 
+    public List<Integer> rows() {
+        List<Integer> rows = new ArrayList<>();
+        for (int i = 0; i < HALL_ROWS; i++) {
+            rows.add(i + 1);
+        }
+        return rows;
+    }
+
+    public List<Integer> cells() {
+        List<Integer> rows = new ArrayList<>();
+        for (int i = 0; i < HALL_CELLS; i++) {
+            rows.add(i + 1);
+        }
+        return rows;
+    }
+
+
     public Collection<Ticket> getFreeTickets() {
         List<Ticket> freeTickets = new ArrayList<>();
-
-
-
         return freeTickets;
     }
 

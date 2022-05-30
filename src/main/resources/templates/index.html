@@ -56,7 +56,7 @@
             <div class="card-body">
                 <form th:action="@{/takeRow}" method="POST" th:object="${ticket}">
                     <input type="hidden" name="id" value="0"/>
-                    <input type="hidden" name="userId" value="0"/>
+                    <input type="hidden" name="userId" value="1"/>
                     <div class="form-group">
                         <label for="film.id">Киносеанс</label>
                         <select class="form-control" id="film.id" name="sessionId">
