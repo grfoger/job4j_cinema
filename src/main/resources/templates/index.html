@@ -62,21 +62,23 @@
                         <select class="form-control" id="film.id" name="sessionId">
                             <option selected>Выберите сеанс</option>
                             <option th:each="film : ${films}" th:value="${film.id}" th:text="${film.name}+' в '+${film.time}"></option>
-                        </select>
-                        <label for="row">Ряд</label>
-                        <select class="form-control" id="row" name="row">
-                            <option selected>Выберите ряд</option>
-                            <option th:each="point : ${points}" th:value="${point}" th:text="${point}+' ? '"></option>
-                            <option value="1">1н</option>
-                            <option value="2">2н</option>
-                            <option value="3">3н</option>
-                        </select>
-                        <label for="cell">Место</label>
-                        <select class="form-control" id="cell" name="cell">
-                            <<option selected>Выберите место</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
+                        </select>
+                        <label for="row" >Ряд</label>
+                        <select class="form-control" id="row" name="row">
+                            <option selected>Выберите ряд</option>
+                            <option th:each="point : ${points}" th:value="${point}" th:text="${point}"></option>
+                            <option value="a">a</option>
+                            <option value="b">b</option>
+                            <option value="c">c</option>
+                        </select>
+                        <label for="cell">Место</label>
+                        <select class="form-control" id="cell" name="cell">
+                            <option selected>Выберите место</option>
+                            <option th:each="point : ${points}" th:value="${point}" th:text="${point}" ></option>
+
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Купить билет</button>

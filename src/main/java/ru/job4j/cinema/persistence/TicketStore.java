@@ -2,6 +2,7 @@ package ru.job4j.cinema.persistence;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.stereotype.Repository;
+import ru.job4j.cinema.model.Session;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.model.User;
 
@@ -10,6 +11,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -43,7 +45,29 @@ public class TicketStore {
         }
         return ticket;
     }
+
+    public Collection<Ticket> getAll() {
+        List<Ticket> allTickets = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM ticket")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    allTickets.add(new Ticket(it.getInt("id"),
+                            it.getInt("film_id"),
+                            it.getInt("row"),
+                            it.getInt("cell"),
+                            it.getInt("user_id")
+                            ));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return allTickets;
+    }
     public Collection<Ticket> getAllByUser(User user) {
         return List.of();
     }
 }
+

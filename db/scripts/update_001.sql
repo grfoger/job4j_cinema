@@ -17,8 +17,11 @@ CREATE TABLE ticket (
                         film_id INT NOT NULL REFERENCES films(id),
                         row INT NOT NULL,
                         cell INT NOT NULL,
-                        user_id INT NOT NULL REFERENCES users(id)
+                        user_id INT NOT NULL REFERENCES users(id),
+                        UNIQUE(film_id, row, cell)
 );
+
+
 
 INSERT INTO films(name, time) VALUES ('Как я отколошматил лося одной левой', '12:00');
 INSERT INTO films(name, time) VALUES ('Мячом по кумполу', '19:00');

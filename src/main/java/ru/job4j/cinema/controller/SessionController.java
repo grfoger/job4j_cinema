@@ -25,15 +25,15 @@ public class SessionController {
 
     @GetMapping("/index")
     public String index(Model model) {
-        model.addAttribute("films", sessionService.getAllFree());
-        model.addAttribute("points", List.of(1, 2, 3));
+        model.addAttribute("films", sessionService.getAll());
+        model.addAttribute("points", List.of(1, 2, 3, 4, 5));
         return "index";
     }
 
     @GetMapping("/tickets")
     public String tickets(Model model) {
         //addAttribute("tickets", userService.getUserTickets(new User()));
-        model.addAttribute("films", sessionService.getAllFree());
+        model.addAttribute("films", sessionService.getAll());
         return "tickets";
     }
 

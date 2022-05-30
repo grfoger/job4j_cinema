@@ -38,6 +38,20 @@ public class SessionStore {
     }
 
     public Session getById(int id) {
-        return new Session();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM films WHERE id = ?")
+        ) {
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return new Session(it.getInt("id"),
+                            it.getString("name"),
+                            it.getTime("time").toLocalTime());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
