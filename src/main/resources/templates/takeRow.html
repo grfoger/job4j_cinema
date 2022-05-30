@@ -54,7 +54,7 @@
                 Покупка билета.
             </div>
             <div class="card-body">
-                <form th:action="@{/takeRow}" method="POST" th:object="${ticket}">
+                <form th:action="@{/tickets}" method="POST" th:object="${ticket}">
                     <input type="hidden" name="id" value="0"/>
                     <input type="hidden" name="userId" value="0"/>
                     <div class="form-group">
@@ -62,9 +62,26 @@
                         <select class="form-control" id="film.id" name="sessionId">
                             <option selected>Выберите сеанс</option>
                             <option th:each="film : ${films}" th:value="${film.id}" th:text="${film.name}+' в '+${film.time}"></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        </select>
+                        <label for="row" >Ряд</label>
+                        <select class="form-control" id="row" name="row">
+                            <option selected>Выберите ряд</option>
+                            <option th:each="point : ${points}" th:value="${point}" th:text="${point}"></option>
+                            <option value="a">a</option>
+                            <option value="b">b</option>
+                            <option value="c">c</option>
+                        </select>
+                        <label for="cell">Место</label>
+                        <select class="form-control" id="cell" name="cell">
+                            <option selected>Выберите место</option>
+                            <option th:each="point : ${points}" th:value="${point}" th:text="${point}" ></option>
+
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Перейти к выбору ряда</button>
+                    <button type="submit" class="btn btn-primary">Купить билет</button>
                 </form>
             </div>
         </div>

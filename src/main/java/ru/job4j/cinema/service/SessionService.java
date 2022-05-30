@@ -33,15 +33,16 @@ public class SessionService {
         return sessionStore.getById(id);
     }
 
-    public Map<Integer, List<Integer>> getFreeCells() {
-        Map<Integer, List<Integer>> freeCells = new HashMap<>();
-        List<Integer> rows = new ArrayList<>();
-        List<Integer> cells = new ArrayList<>();
-        List<Ticket> tickets = ticketStore.getAll().stream().toList();
+    public Ticket addTicket(Ticket ticket) {
+        return ticketStore.add(ticket);
+    }
+
+    public Collection<Ticket> getFreeTickets() {
+        List<Ticket> freeTickets = new ArrayList<>();
 
 
 
-        return freeCells;
+        return freeTickets;
     }
 
 }

@@ -4,6 +4,8 @@ import net.jcip.annotations.ThreadSafe;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.model.User;
 import ru.job4j.cinema.service.SessionService;
@@ -26,9 +28,22 @@ public class SessionController {
     @GetMapping("/index")
     public String index(Model model) {
         model.addAttribute("films", sessionService.getAll());
-        model.addAttribute("points", List.of(1, 2, 3, 4, 5));
+        model.addAttribute("ticket", new Ticket(0, -1, -1, -1, -1));
         return "index";
     }
+
+    @PostMapping("/takeRow")
+    public String takeRowPost(@ModelAttribute Ticket ticket) {
+        sessionService.addTicket(ticket);
+        return "redirect:/takeRow";
+    }
+
+    @GetMapping("/takeRow")
+    public String takeRowGet(Model model) {
+        model.addAttribute("ticket", new Ticket(-1, -1, -1, -1, -1));
+        return "index";
+    }
+
 
     @GetMapping("/tickets")
     public String tickets(Model model) {
