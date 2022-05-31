@@ -37,6 +37,10 @@ public class SessionService {
         return ticketStore.add(ticket);
     }
 
+    public Ticket getTicketById(int id) {
+        return ticketStore.getById(id);
+    }
+
     public List<Integer> rows() {
         List<Integer> rows = new ArrayList<>();
         for (int i = 0; i < HALL_ROWS; i++) {

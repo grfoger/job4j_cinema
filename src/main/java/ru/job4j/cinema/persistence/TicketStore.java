@@ -66,8 +66,30 @@ public class TicketStore {
         }
         return allTickets;
     }
+
+    public Ticket getById(int id) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM ticket WHERE id = ?")
+        ) {
+            ps.setInt(1, id);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return new Ticket(it.getInt("id"),
+                            it.getInt("session_id"),
+                            it.getInt("row"),
+                            it.getInt("cell"),
+                            it.getInt("user_id"));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public Collection<Ticket> getAllByUser(User user) {
         return List.of();
     }
+
+
 }
 
