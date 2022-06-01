@@ -84,13 +84,4 @@ public class SessionController {
         return "tickets";
     }
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        return "login";
-    }
-
-    @GetMapping("/reg")
-    public String reg(Model model) {
-        return "reg";
-    }
 }

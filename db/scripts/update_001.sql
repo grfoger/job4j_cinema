@@ -3,7 +3,8 @@ CREATE TABLE users (
                        id SERIAL PRIMARY KEY,
                        username VARCHAR NOT NULL,
                        email VARCHAR NOT NULL UNIQUE,
-                       phone VARCHAR NOT NULL UNIQUE
+                       phone VARCHAR NOT NULL UNIQUE,
+                       password VARCHAR NOT NULL
 );
 
 CREATE TABLE films (
@@ -27,4 +28,4 @@ INSERT INTO films(name, time) VALUES ('Как я отколошматил лос
 INSERT INTO films(name, time) VALUES ('Мячом по кумполу', '19:00');
 INSERT INTO films(name, time) VALUES ('Механический Дед Мороз м/ф', '20:00');
 
-INSERT INTO users(username, email, phone) VALUES ('nobody', 'nobody@gmail.com', '555');
+INSERT INTO users(username, email, phone, password) VALUES ('nobody', 'nobody@gmail.com', '555', '1234');

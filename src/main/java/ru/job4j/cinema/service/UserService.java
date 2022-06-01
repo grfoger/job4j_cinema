@@ -11,6 +11,7 @@ import ru.job4j.cinema.persistence.UserStore;
 import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -34,4 +35,9 @@ public class UserService {
         }
         return ticketStore.getAllByUser(user);
     }
+
+    public Optional<User> add(User user) {
+        return userStore.addUser(user);
+    }
+
 }
