@@ -1,5 +1,5 @@
 
-CREATE TABLE [IF NOT EXIST] users (
+CREATE TABLE users (
                        id SERIAL PRIMARY KEY,
                        username VARCHAR NOT NULL,
                        email VARCHAR NOT NULL UNIQUE,
@@ -7,19 +7,19 @@ CREATE TABLE [IF NOT EXIST] users (
                        password VARCHAR NOT NULL
 );
 
-CREATE TABLE [IF NOT EXIST] films (
+CREATE TABLE films (
                           id SERIAL PRIMARY KEY,
                           name TEXT,
                           time TIME
 );
 
-CREATE TABLE [IF NOT EXIST] ticket (
+CREATE TABLE ticket (
                         id SERIAL PRIMARY KEY,
                         film_id INT NOT NULL REFERENCES films(id),
-                        row INT NOT NULL,
+                        row_ INT NOT NULL,
                         cell INT NOT NULL,
                         user_id INT NOT NULL REFERENCES users(id),
-                        UNIQUE(film_id, row, cell)
+                        UNIQUE(film_id, row_, cell)
 );
 
 

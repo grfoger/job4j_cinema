@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.cinema.model.User;
+import ru.job4j.cinema.service.SessionService;
 import ru.job4j.cinema.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +20,11 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
+    private final SessionService sessionService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, SessionService sessionService) {
         this.userService = userService;
+        this.sessionService = sessionService;
     }
 
     private User getSessionUser(HttpSession session) {
@@ -52,6 +55,7 @@ public class UserController {
 
     @GetMapping("/success")
     public String success(Model model, HttpSession session) {
+        model.addAttribute("films", sessionService.getAll());
         model.addAttribute("user", getSessionUser(session));
         return "index";
     }
@@ -76,7 +80,8 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public String logout(Model model, HttpSession session) {
+        model.addAttribute("films", sessionService.getAll());
         session.invalidate();
         return "redirect:/index";
     }

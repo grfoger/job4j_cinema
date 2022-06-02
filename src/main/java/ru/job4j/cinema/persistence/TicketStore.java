@@ -27,7 +27,7 @@ public class TicketStore {
     public Ticket add(Ticket ticket) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(
-                     "INSERT INTO ticket(film_id, row, cell, user_id) VALUES (?, ?, ?, ?)",
+                     "INSERT INTO ticket(film_id, row_, cell, user_id) VALUES (?, ?, ?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setInt(1, ticket.getSessionId());
@@ -55,7 +55,7 @@ public class TicketStore {
                 while (it.next()) {
                     allTickets.add(new Ticket(it.getInt("id"),
                             it.getInt("film_id"),
-                            it.getInt("row"),
+                            it.getInt("row_"),
                             it.getInt("cell"),
                             it.getInt("user_id")
                             ));
@@ -77,7 +77,7 @@ public class TicketStore {
                     return new Ticket(it.getInt("id"),
                             it.getInt("user_id"),
                             it.getInt("film_id"),
-                            it.getInt("row"),
+                            it.getInt("row_"),
                             it.getInt("cell"));
                 }
             }
@@ -97,7 +97,7 @@ public class TicketStore {
                     allTicketsByUser.add(new Ticket(it.getInt("id"),
                             it.getInt("user_id"),
                             it.getInt("film_id"),
-                            it.getInt("row"),
+                            it.getInt("row_"),
                             it.getInt("cell")));
                 }
             }
@@ -111,7 +111,7 @@ public class TicketStore {
     public Collection<Ticket> getByRowAndSession(int session, int row) {
         List<Ticket> tickets = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM ticket WHERE film_id = ? AND row = ?")
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM ticket WHERE film_id = ? AND row_ = ?")
         ) {
             ps.setInt(1, session);
             ps.setInt(2, row);
@@ -120,7 +120,7 @@ public class TicketStore {
                     tickets.add(new Ticket(it.getInt("id"),
                             it.getInt("user_id"),
                             it.getInt("film_id"),
-                            it.getInt("row"),
+                            it.getInt("row_"),
                             it.getInt("cell")));
                 }
             }
