@@ -38,7 +38,8 @@ public class SessionController {
     }
 
     @GetMapping("/index")
-    public String index(Model model) {
+    public String index(Model model, HttpSession session) {
+        model.addAttribute("user", getSessionUser(session));
         model.addAttribute("films", sessionService.getAll());
         model.addAttribute("ticket", new Ticket());
         return "index";
@@ -52,6 +53,7 @@ public class SessionController {
 
     @GetMapping("/takeRow")
     public String takeRowGet(Model model, HttpSession session) {
+        model.addAttribute("user", getSessionUser(session));
         model.addAttribute("rows", sessionService.rows());
         return "takeRow";
     }
@@ -65,6 +67,7 @@ public class SessionController {
 
     @GetMapping("/takeCell")
     public String takeCellGet(Model model, HttpSession session) {
+        model.addAttribute("user", getSessionUser(session));
         model.addAttribute("cells", sessionService.cells());
         return "takeCell";
     }
@@ -73,14 +76,16 @@ public class SessionController {
     public String ticketsPost(@ModelAttribute Ticket ticket, HttpSession session) {
         Ticket sessionTicket = (Ticket) session.getAttribute("ticket");
         sessionTicket.setCell(ticket.getCell());
+        sessionTicket.setUserId(getSessionUser(session).getId());
+        sessionService.addTicket(sessionTicket);
         return "redirect:/tickets";
     }
 
     @GetMapping("/tickets")
     public String tickets(Model model, HttpSession session) {
-        Ticket sessionTicket = (Ticket) session.getAttribute("ticket");
-        model.addAttribute("tickets", List.of(sessionTicket));
-        //model.addAttribute("tickets", userService.getUserTickets(new User()));
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("user", getSessionUser(session));
+        model.addAttribute("tickets", userService.getUserTickets(user));
         return "tickets";
     }
 

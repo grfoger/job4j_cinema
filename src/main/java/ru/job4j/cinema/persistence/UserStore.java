@@ -42,4 +42,24 @@ public class UserStore {
         }
         return Optional.of(user);
     }
+
+    public Optional<User> findUserBy(String email) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM users WHERE email = ?")
+        ) {
+            ps.setString(1, email);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    return Optional.of(new User(it.getInt("id"),
+                            it.getString("username"),
+                            it.getString("email"),
+                            it.getString("phone"),
+                            it.getString("password")));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
 }

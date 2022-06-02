@@ -87,7 +87,24 @@ public class TicketStore {
         return null;
     }
     public Collection<Ticket> getAllByUser(User user) {
-        return List.of();
+        List<Ticket> allTicketsByUser = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM ticket WHERE user_id = ?")
+        ) {
+            ps.setInt(1, user.getId());
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    allTicketsByUser.add(new Ticket(it.getInt("id"),
+                            it.getInt("film_id"),
+                            it.getInt("row"),
+                            it.getInt("cell"),
+                            it.getInt("user_id")));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return allTicketsByUser;
     }
 
 

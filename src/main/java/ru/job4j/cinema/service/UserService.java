@@ -27,17 +27,19 @@ public class UserService {
     }
 
     public Collection<Ticket> getUserTickets(User user) {
-        int foo = 0;
-        if (foo == 0) {
-            return List.of(
-                    new Ticket(0, user.getId(), 1, 1, 1),
-                    new Ticket(0, user.getId(), 1, 1, 1));
-        }
         return ticketStore.getAllByUser(user);
     }
 
     public Optional<User> add(User user) {
         return userStore.addUser(user);
+    }
+
+    public Optional<User> findUserByEmailAndPass(String email, String password) {
+        Optional<User> userDb = userStore.findUserBy(email);
+        if (userDb.isPresent() && !password.equals(userDb.get().getPassword())) {
+            return Optional.empty();
+        }
+        return userDb;
     }
 
 }
