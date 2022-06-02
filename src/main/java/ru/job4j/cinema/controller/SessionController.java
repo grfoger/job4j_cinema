@@ -67,8 +67,9 @@ public class SessionController {
 
     @GetMapping("/takeCell")
     public String takeCellGet(Model model, HttpSession session) {
+        Ticket sessionTicket = (Ticket) session.getAttribute("ticket");
         model.addAttribute("user", getSessionUser(session));
-        model.addAttribute("cells", sessionService.cells());
+        model.addAttribute("cells", sessionService.freeCells(sessionTicket.getSessionId(), sessionTicket.getRow()));
         return "takeCell";
     }
 

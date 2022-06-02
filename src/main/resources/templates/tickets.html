@@ -49,11 +49,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="ticket: ${tickets}">
-                <td th:text="${ticket.sessionId}" />
-                <td th:text="${ticket.sessionId}" />
-                <td th:text="${ticket.row}" />
-                <td th:text="${ticket.cell}" />
+            <tr th:each="mapEntry: ${tickets}">
+                <td th:text="${mapEntry.value.name}" />
+                <td th:text="${mapEntry.value.time}" />
+                <td th:text="${mapEntry.key.row}" />
+                <td th:text="${mapEntry.key.cell}" />
             </tr>
             </tbody>
         </table>

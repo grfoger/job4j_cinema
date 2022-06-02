@@ -10,6 +10,7 @@ import ru.job4j.cinema.persistence.UserStore;
 
 import java.time.LocalTime;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +27,10 @@ public class UserService {
         this.sessionStore = sessionStore;
     }
 
-    public Collection<Ticket> getUserTickets(User user) {
-        return ticketStore.getAllByUser(user);
+    public HashMap<Ticket, Session> getUserTickets(User user) {
+        HashMap<Ticket, Session> map = new HashMap<>();
+        ticketStore.getAllByUser(user).forEach(x -> map.put(x, sessionStore.getById(x.getSessionId())));
+        return map;
     }
 
     public Optional<User> add(User user) {

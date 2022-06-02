@@ -29,16 +29,8 @@ public class SessionService {
         return sessionStore.getAll();
     }
 
-    public Session getSessionById(int id) {
-        return sessionStore.getById(id);
-    }
-
     public Ticket addTicket(Ticket ticket) {
         return ticketStore.add(ticket);
-    }
-
-    public Ticket getTicketById(int id) {
-        return ticketStore.getById(id);
     }
 
     public List<Integer> rows() {
@@ -50,17 +42,25 @@ public class SessionService {
     }
 
     public List<Integer> cells() {
-        List<Integer> rows = new ArrayList<>();
+        List<Integer> cells = new ArrayList<>();
         for (int i = 0; i < HALL_CELLS; i++) {
-            rows.add(i + 1);
+            cells.add(i + 1);
         }
-        return rows;
+        return cells;
     }
 
 
-    public Collection<Ticket> getFreeTickets() {
-        List<Ticket> freeTickets = new ArrayList<>();
-        return freeTickets;
+    private Collection<Ticket> ticketsByRowAndSession(int session, int row) {
+        return ticketStore.getByRowAndSession(session, row);
     }
 
+    public Collection<Integer> freeCells(int sessionId, int row) {
+        List<Integer> cells = cells();
+        ticketsByRowAndSession(sessionId, row).forEach(x -> {
+            if (cells.contains(x.getCell())) {
+                cells.remove(Integer.valueOf(x.getCell()));
+            }
+        });
+        return cells;
+    }
 }

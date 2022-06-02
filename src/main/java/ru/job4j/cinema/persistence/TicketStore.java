@@ -75,10 +75,10 @@ public class TicketStore {
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
                     return new Ticket(it.getInt("id"),
-                            it.getInt("session_id"),
+                            it.getInt("user_id"),
+                            it.getInt("film_id"),
                             it.getInt("row"),
-                            it.getInt("cell"),
-                            it.getInt("user_id"));
+                            it.getInt("cell"));
                 }
             }
         } catch (Exception e) {
@@ -95,10 +95,10 @@ public class TicketStore {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
                     allTicketsByUser.add(new Ticket(it.getInt("id"),
+                            it.getInt("user_id"),
                             it.getInt("film_id"),
                             it.getInt("row"),
-                            it.getInt("cell"),
-                            it.getInt("user_id")));
+                            it.getInt("cell")));
                 }
             }
         } catch (Exception e) {
@@ -108,5 +108,26 @@ public class TicketStore {
     }
 
 
+    public Collection<Ticket> getByRowAndSession(int session, int row) {
+        List<Ticket> tickets = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM ticket WHERE film_id = ? AND row = ?")
+        ) {
+            ps.setInt(1, session);
+            ps.setInt(2, row);
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    tickets.add(new Ticket(it.getInt("id"),
+                            it.getInt("user_id"),
+                            it.getInt("film_id"),
+                            it.getInt("row"),
+                            it.getInt("cell")));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tickets;
+    }
 }
 
