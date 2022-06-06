@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class SessionStore {
@@ -19,6 +20,7 @@ public class SessionStore {
     public SessionStore(BasicDataSource pool) {
         this.pool = pool;
     }
+
     public Collection<Session> getAll() {
         List<Session> films = new ArrayList<>();
         try (Connection cn = pool.getConnection();
@@ -37,21 +39,21 @@ public class SessionStore {
         return films;
     }
 
-    public Session getById(int id) {
+    public Optional<Session> getById(int id) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("SELECT * FROM films WHERE id = ?")
         ) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return new Session(it.getInt("id"),
+                    return Optional.of(new Session(it.getInt("id"),
                             it.getString("name"),
-                            it.getTime("time").toLocalTime());
+                            it.getTime("time").toLocalTime()));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return Optional.empty();
     }
 }

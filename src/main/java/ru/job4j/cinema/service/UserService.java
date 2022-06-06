@@ -29,7 +29,7 @@ public class UserService {
 
     public HashMap<Ticket, Session> getUserTickets(User user) {
         HashMap<Ticket, Session> map = new HashMap<>();
-        ticketStore.getAllByUser(user).forEach(x -> map.put(x, sessionStore.getById(x.getSessionId())));
+        ticketStore.getAllByUser(user).forEach(x -> map.put(x, sessionStore.getById(x.getSessionId()).get()));
         return map;
     }
 

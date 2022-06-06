@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class TicketStore {
@@ -67,25 +68,7 @@ public class TicketStore {
         return allTickets;
     }
 
-    public Ticket getById(int id) {
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM ticket WHERE id = ?")
-        ) {
-            ps.setInt(1, id);
-            try (ResultSet it = ps.executeQuery()) {
-                if (it.next()) {
-                    return new Ticket(it.getInt("id"),
-                            it.getInt("user_id"),
-                            it.getInt("film_id"),
-                            it.getInt("row_"),
-                            it.getInt("cell"));
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
     public Collection<Ticket> getAllByUser(User user) {
         List<Ticket> allTicketsByUser = new ArrayList<>();
         try (Connection cn = pool.getConnection();
